@@ -1,0 +1,53 @@
+{
+  "data": [
+    {
+      "id": "liu_bei_yard",
+      "name": "刘备故居·大院",
+      "width": 15, "height": 8,
+      "tiles": [
+        [0,0,0,0,0,0,0,1,1,0,0,0,0,0,0],
+        [0,1,1,0,0,0,1,1,0,0,0,0,0,0,0],
+        [0,1,1,1,0,1,1,0,0,2,0,0,2,0,0],
+        [0,1,1,1,1,1,0,0,0,0,0,0,0,0,0],
+        [0,0,1,1,1,0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+      ],
+      "entities": [
+        {"type": "building", "targetId": "barracks",   "x": 1, "y": 1},
+        {"type": "building", "targetId": "inn",        "x": 12, "y": 2},
+        {"type": "building", "targetId": "blacksmith", "x": 13, "y": 1},
+        {"type": "building", "targetId": "residence",   "x": 3, "y": 1},
+        {"type": "building", "targetId": "ren_shi_chu","x": 6, "y": 1},
+        {"type": "npc",      "targetId": "jin_suo",    "x": 5, "y": 2},
+        {"type": "npc",      "targetId": "newbie_amb", "x": 8, "y": 2},
+        {"type": "monster",  "targetId": "huang_jin_soldier", "x": 10, "y": 4}
+      ],
+      "exits": [{"x": 14, "y": 3, "targetMapId": "zhuo_jun_outskirts"}]
+    },
+    {
+      "id": "zhuo_jun_outskirts",
+      "name": "涿郡郊外",
+      "width": 15, "height": 8,
+      "tiles": [
+        [0,0,0,0,0,0,0,3,0,0,0,0,0,0,0],
+        [0,1,1,1,0,0,0,0,0,0,0,2,0,0,0],
+        [0,0,0,1,0,2,0,0,0,0,0,0,0,0,0],
+        [0,0,0,1,1,1,0,2,0,0,0,0,0,0,0],
+        [0,2,0,0,1,0,0,0,0,0,0,0,2,0,0],
+        [0,0,0,0,1,0,0,0,2,0,0,0,0,0,0],
+        [0,0,2,0,0,0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+      ],
+      "entities": [
+        {"type": "monster", "targetId": "huang_jin_soldier", "x": 3, "y": 1},
+        {"type": "monster", "targetId": "huang_jin_soldier", "x": 5, "y": 4},
+        {"type": "monster", "targetId": "huang_jin_soldier", "x": 12, "y": 2},
+        {"type": "monster", "targetId": "huang_jin_soldier", "x": 10, "y": 5},
+        {"type": "monster", "targetId": "cheng_yuan_zhi",    "x": 13, "y": 6}
+      ],
+      "exits": [{"x": 0, "y": 3, "targetMapId": "liu_bei_yard"}]
+    }
+  ]
+}

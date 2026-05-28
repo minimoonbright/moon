@@ -1,0 +1,7 @@
+build/
+*.obj
+*.exe
+*.o
+CMakeCache.txt
+CMakeFiles/
+*.autogen

@@ -1,0 +1,11 @@
+{
+  "data": [
+    {"id": "iron_sword",      "name": "铁剑",     "slot": "weapon",     "quality": 1, "bonus": {"atk": 8},  "price": 50},
+    {"id": "steel_blade",     "name": "钢刀",     "slot": "weapon",     "quality": 2, "bonus": {"atk": 15}, "price": 150},
+    {"id": "leather_helm",    "name": "皮盔",     "slot": "helmet",     "quality": 1, "bonus": {"def": 5},  "price": 40},
+    {"id": "iron_armor",      "name": "铁甲",     "slot": "armor",      "quality": 1, "bonus": {"def": 8, "maxHp": 20}, "price": 100},
+    {"id": "cloth_boots",     "name": "布靴",     "slot": "boots",      "quality": 1, "bonus": {"spd": 5},  "price": 30},
+    {"id": "jade_ring",       "name": "玉佩",     "slot": "accessory1", "quality": 2, "bonus": {"critRate": 5},  "price": 120},
+    {"id": "war_horse",       "name": "战马",     "slot": "mount",      "quality": 2, "bonus": {"spd": 10}, "specialEffect": "先手攻击", "price": 300}
+  ]
+}

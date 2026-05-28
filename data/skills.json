@@ -1,0 +1,15 @@
+{
+  "data": [
+    {"id": "double_strike",   "name": "连斩",     "type": "physical",  "mpCost": 12, "power": 40},
+    {"id": "heavy_slash",     "name": "猛击",     "type": "physical",  "mpCost": 15, "power": 55},
+    {"id": "furious_strike",  "name": "狂暴一击",  "type": "physical",  "mpCost": 20, "power": 75},
+    {"id": "roar",            "name": "怒吼",     "type": "control",   "mpCost": 10, "power": 0},
+    {"id": "war_cry",         "name": "战吼",     "type": "control",   "mpCost": 15, "power": 0},
+    {"id": "encourage",       "name": "鼓舞",     "type": "heal",      "mpCost": 18, "power": 30},
+    {"id": "healing_light",   "name": "治愈之光",  "type": "heal",      "mpCost": 25, "power": 60},
+    {"id": "fire_attack",     "name": "火计",     "type": "strategy",  "mpCost": 18, "power": 45},
+    {"id": "thunder_strike",  "name": "雷击",     "type": "strategy",  "mpCost": 30, "power": 70},
+    {"id": "water_attack",    "name": "水攻",     "type": "strategy",  "mpCost": 20, "power": 50},
+    {"id": "confusion",       "name": "混乱之术",  "type": "control",   "mpCost": 22, "power": 0}
+  ]
+}

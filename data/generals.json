@@ -1,0 +1,104 @@
+{
+  "data": [
+    {
+      "id": "liu_bei",
+      "name": "刘备",
+      "class": "warrior",
+      "stats": {"hp": 180, "maxHp": 180, "mp": 60, "maxMp": 60, "atk": 18, "def": 14, "spd": 16, "intel": 14, "benevolence": 90, "charisma": 85},
+      "skills": ["double_strike", "encourage"],
+      "personality": "loyal",
+      "loyalty": 95
+    },
+    {
+      "id": "guan_yu",
+      "name": "关羽",
+      "class": "warrior",
+      "stats": {"hp": 220, "maxHp": 220, "mp": 40, "maxMp": 40, "atk": 25, "def": 16, "spd": 14, "intel": 12, "benevolence": 70, "charisma": 60},
+      "skills": ["heavy_slash", "war_cry"],
+      "personality": "loyal",
+      "loyalty": 90
+    },
+    {
+      "id": "zhang_fei",
+      "name": "张飞",
+      "class": "warrior",
+      "stats": {"hp": 240, "maxHp": 240, "mp": 30, "maxMp": 30, "atk": 26, "def": 14, "spd": 12, "intel": 8, "benevolence": 55, "charisma": 45},
+      "skills": ["roar", "furious_strike"],
+      "personality": "loyal",
+      "loyalty": 90
+    },
+    {
+      "id": "cheng_yuan_zhi",
+      "name": "程远志",
+      "class": "general",
+      "stats": {"hp": 350, "maxHp": 350, "mp": 60, "maxMp": 60, "atk": 22, "def": 12, "spd": 13, "intel": 10},
+      "skills": ["heavy_slash"],
+      "personality": "cowardly",
+      "loyalty": 30,
+      "recruitHint": "此人贪生怕死，以武力相逼或许有效"
+    },
+    {
+      "id": "zhou_cang",
+      "name": "周仓",
+      "class": "warrior",
+      "stats": {"hp": 280, "maxHp": 280, "mp": 35, "maxMp": 35, "atk": 20, "def": 15, "spd": 11, "intel": 6},
+      "skills": ["heavy_slash"],
+      "personality": "loyal",
+      "loyalty": 70,
+      "recruitCondition": "guanyu_vs_zhoucang",
+      "recruitHint": "传闻此人只服武艺高强者..."
+    },
+    {
+      "id": "liao_hua",
+      "name": "廖化",
+      "class": "general",
+      "stats": {"hp": 200, "maxHp": 200, "mp": 50, "maxMp": 50, "atk": 16, "def": 12, "spd": 15, "intel": 10},
+      "skills": ["double_strike"],
+      "personality": "loyal",
+      "loyalty": 60,
+      "recruitCondition": "no_skill_liaohua",
+      "recruitHint": "此人欣赏光明正大的对手..."
+    },
+    {
+      "id": "guan_hai",
+      "name": "管亥",
+      "class": "warrior",
+      "stats": {"hp": 300, "maxHp": 300, "mp": 40, "maxMp": 40, "atk": 21, "def": 13, "spd": 12, "intel": 7},
+      "skills": ["war_cry", "furious_strike"],
+      "personality": "cowardly",
+      "loyalty": 40,
+      "recruitCondition": "turn_limit_guanhai",
+      "recruitHint": "传闻此人敬畏强者，速战速决可令其心服..."
+    },
+    {
+      "id": "zhang_yan",
+      "name": "张燕",
+      "class": "general",
+      "stats": {"hp": 250, "maxHp": 250, "mp": 55, "maxMp": 55, "atk": 17, "def": 11, "spd": 18, "intel": 9},
+      "skills": ["double_strike", "encourage"],
+      "personality": "arrogant",
+      "loyalty": 45,
+      "recruitCondition": "three_yellow_turban",
+      "recruitHint": "传闻此人念旧，见到昔日同僚会放下戒备..."
+    },
+    {
+      "id": "zhang_jiao",
+      "name": "张角",
+      "class": "strategist",
+      "stats": {"hp": 500, "maxHp": 500, "mp": 250, "maxMp": 250, "atk": 20, "def": 18, "spd": 22, "intel": 30},
+      "skills": ["thunder_strike", "healing_light", "confusion"],
+      "personality": "arrogant",
+      "loyalty": 80,
+      "recruitHint": "传闻此人只有在太平要术被夺走时才会动摇..."
+    },
+    {
+      "id": "huang_jin_soldier",
+      "name": "黄巾兵",
+      "class": "warrior",
+      "stats": {"hp": 100, "maxHp": 100, "mp": 20, "maxMp": 20, "atk": 10, "def": 5, "spd": 8, "intel": 3},
+      "skills": [],
+      "personality": "cowardly",
+      "loyalty": 10
+    }
+  ]
+}

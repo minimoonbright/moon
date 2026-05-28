@@ -1,0 +1,7 @@
+{
+  "data": [
+    {"id": "heal_pill",   "name": "金疮药",   "description": "恢复 50 HP", "hpRestore": 50, "price": 30},
+    {"id": "mp_pill",     "name": "回神丹",   "description": "恢复 30 MP", "mpRestore": 30, "price": 35},
+    {"id": "revive_pill", "name": "还魂丹",   "description": "复活一名武将", "hpRestore": 100, "price": 200}
+  ]
+}
