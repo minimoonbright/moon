@@ -17,7 +17,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     setCentralWidget(m_stack);
     loadGameData();
     setupPlayerTeam();
-    switchToMap("liu_bei_yard");
+    switchToMap("liu_bei_yard", 2, 2);
 }
 
 void MainWindow::loadGameData()
@@ -47,7 +47,7 @@ void MainWindow::setupPlayerTeam()
     }
 }
 
-void MainWindow::switchToMap(const QString &mapId)
+void MainWindow::switchToMap(const QString &mapId, int startX, int startY)
 {
     const auto *mapData = DataManager::instance().getMap(mapId);
     if (!mapData) { qWarning() << "Map not found:" << mapId; return; }
@@ -63,7 +63,7 @@ void MainWindow::switchToMap(const QString &mapId)
     m_mapScene = new MapScene(this);
     m_mapView = new MapView;
     m_mapView->setScene(m_mapScene);
-    m_mapScene->loadMap(*mapData);
+    m_mapScene->loadMap(*mapData, startX, startY);
 
     connect(m_mapScene, &MapScene::mapExit, this, &MainWindow::onMapExit);
     connect(m_mapScene, &MapScene::battleTriggered, this, &MainWindow::onBattleTriggered);

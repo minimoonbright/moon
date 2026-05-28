@@ -24,7 +24,7 @@ private slots:
 
 private:
     void loadGameData();
-    void switchToMap(const QString &mapId);
+    void switchToMap(const QString &mapId, int startX = -1, int startY = -1);
     void switchToBattle(const QString &enemyTemplateId);
     void setupPlayerTeam();
     void addRecruitToTeam(const CharacterData &data);
