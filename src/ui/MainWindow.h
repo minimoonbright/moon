@@ -43,4 +43,6 @@ private:
     QMap<QString, int> m_items;
     QStringList m_captives;
     int m_savedPlayerX = -1, m_savedPlayerY = -1;
+    int m_monsterAtX = -1, m_monsterAtY = -1;
+    QMap<QString, QVector<QPoint>> m_defeated; // mapId -> 怪物坐标列表
 };

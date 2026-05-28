@@ -16,6 +16,9 @@ public:
 
     bool movePlayer(int dx, int dy);
     void interactAt(int x, int y);
+    int lastMonsterX() const { return m_lastMx; }
+    int lastMonsterY() const { return m_lastMy; }
+    void removeMonsterAt(int x, int y);
 
 signals:
     void mapExit(const QString &targetMapId);
@@ -33,4 +36,5 @@ private:
     QVector<NpcSprite *> m_npcs;
     QVector<MonsterSprite *> m_monsters;
     int m_tileSize = 64;
+    int m_lastMx = -1, m_lastMy = -1;
 };

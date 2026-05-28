@@ -11,6 +11,7 @@
 #include <QInputDialog>
 #include <QStringList>
 #include <QRandomGenerator>
+#include <algorithm>
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
@@ -73,6 +74,10 @@ void MainWindow::switchToMap(const QString &mapId, int startX, int startY)
     m_mapView->setScene(m_mapScene);
     m_mapScene->loadMap(*mapData, startX, startY);
 
+    // 移除已被消灭的怪物
+    for (const auto &d : m_defeated.value(mapId))
+        m_mapScene->removeMonsterAt(d.x(), d.y());
+
     connect(m_mapScene, &MapScene::mapExit, this, &MainWindow::onMapExit);
     connect(m_mapScene, &MapScene::battleTriggered, this, &MainWindow::onBattleTriggered);
     connect(m_mapScene, &MapScene::npcInteracted, this, &MainWindow::onNpcInteracted);
@@ -121,6 +126,11 @@ void MainWindow::onBattleFinished(bool won, const QString &enemyId,
     if (won) {
         m_gold += gold;
         for (auto *c : m_playerTeam) c->addExp(exp);
+
+        if (m_monsterAtX >= 0) {
+            m_defeated[m_currentMapId].append(QPoint(m_monsterAtX, m_monsterAtY));
+            m_monsterAtX = m_monsterAtY = -1;
+        }
 
         const auto *enemyTmpl = DataManager::instance().getGeneralTemplate(enemyId);
         if (enemyTmpl && !enemyId.contains("soldier")) {
@@ -453,6 +463,10 @@ void MainWindow::onBattleTriggered(const QString &monsterId)
     if (m_mapScene && m_mapScene->player()) {
         m_savedPlayerX = m_mapScene->player()->gridX();
         m_savedPlayerY = m_mapScene->player()->gridY();
+    }
+    if (m_mapScene) {
+        m_monsterAtX = m_mapScene->lastMonsterX();
+        m_monsterAtY = m_mapScene->lastMonsterY();
     }
     switchToBattle(monsterId);
 }

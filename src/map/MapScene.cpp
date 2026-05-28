@@ -150,6 +150,7 @@ bool MapScene::movePlayer(int dx, int dy)
 
     for (auto *monster : m_monsters) {
         if (monster->gridX() == nx && monster->gridY() == ny) {
+            m_lastMx = nx; m_lastMy = ny;
             emit battleTriggered(monster->monsterId());
             return false;
         }
@@ -173,6 +174,18 @@ bool MapScene::movePlayer(int dx, int dy)
     m_player->setPos(nx * m_tileSize + m_tileSize / 2,
                      ny * m_tileSize + m_tileSize / 2);
     return true;
+}
+
+void MapScene::removeMonsterAt(int x, int y)
+{
+    for (int i = 0; i < m_monsters.size(); ++i) {
+        if (m_monsters[i]->gridX() == x && m_monsters[i]->gridY() == y) {
+            removeItem(m_monsters[i]);
+            delete m_monsters[i];
+            m_monsters.removeAt(i);
+            return;
+        }
+    }
 }
 
 void MapScene::interactAt(int x, int y)
