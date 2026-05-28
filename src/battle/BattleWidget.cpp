@@ -7,6 +7,7 @@
 #include <QRandomGenerator>
 #include <QInputDialog>
 #include <QMessageBox>
+#include <QKeyEvent>
 
 // ============= BattleFieldWidget =============
 
@@ -251,17 +252,17 @@ BattleWidget::BattleWidget(QWidget *parent)
         "QPushButton:hover { opacity: 0.85; }"
         "QPushButton:disabled { background: #444; color: #777; }");
 
-    m_btnAttack = new QPushButton(QString::fromUtf8("\xe2\x9a\x94\xef\xb8\x8f \xe6\x94\xbb\xe5\x87\xbb"));
+    m_btnAttack = new QPushButton(QString::fromUtf8("Q \xe6\x94\xbb\xe5\x87\xbb"));
     m_btnAttack->setStyleSheet("QPushButton { background: #c0392b; } " + btnBase);
-    m_btnSkill  = new QPushButton(QString::fromUtf8("\xe2\x9c\xa8 \xe6\x8a\x80\xe8\x83\xbd"));
+    m_btnSkill  = new QPushButton(QString::fromUtf8("W \xe6\x8a\x80\xe8\x83\xbd"));
     m_btnSkill->setStyleSheet("QPushButton { background: #2471a3; } " + btnBase);
-    m_btnDefend = new QPushButton(QString::fromUtf8("\xf0\x9f\x9b\xa1\xef\xb8\x8f \xe9\x98\xb2\xe5\xbe\xa1"));
+    m_btnDefend = new QPushButton(QString::fromUtf8("E \xe9\x98\xb2\xe5\xbe\xa1"));
     m_btnDefend->setStyleSheet("QPushButton { background: #1e8449; } " + btnBase);
-    m_btnItem   = new QPushButton(QString::fromUtf8("\xf0\x9f\x8e\x92 \xe9\x81\x93\xe5\x85\xb7"));
+    m_btnItem   = new QPushButton(QString::fromUtf8("R \xe9\x81\x93\xe5\x85\xb7"));
     m_btnItem->setStyleSheet("QPushButton { background: #b7950b; color: #333; } " + btnBase);
-    m_btnFlee   = new QPushButton(QString::fromUtf8("\xf0\x9f\x8f\x83 \xe6\x92\xa4\xe9\x80\x80"));
+    m_btnFlee   = new QPushButton(QString::fromUtf8("F \xe6\x92\xa4\xe9\x80\x80"));
     m_btnFlee->setStyleSheet("QPushButton { background: #7d3c98; } " + btnBase);
-    m_btnView   = new QPushButton(QString::fromUtf8("\xf0\x9f\x94\x8d \xe6\x9f\xa5\xe7\x9c\x8b"));
+    m_btnView   = new QPushButton(QString::fromUtf8("V \xe6\x9f\xa5\xe7\x9c\x8b"));
     m_btnView->setStyleSheet("QPushButton { background: #555; } " + btnBase);
 
     for (auto *btn : {m_btnAttack, m_btnSkill, m_btnDefend, m_btnItem, m_btnFlee, m_btnView})
@@ -553,4 +554,19 @@ void BattleWidget::onBattleEnd(bool playerWon)
                         m_engine->lootItems(),
                         m_engine->turnCount(), m_engine->killerTemplateId(),
                         m_engine->skillWasUsed());
+}
+
+void BattleWidget::keyPressEvent(QKeyEvent *event)
+{
+    if (!m_btnAttack->isEnabled()) return; // 不是玩家回合
+
+    switch (event->key()) {
+        case Qt::Key_Q: onAttack(); break;
+        case Qt::Key_W: onSkill(); break;
+        case Qt::Key_E: onDefend(); break;
+        case Qt::Key_R: onItem(); break;
+        case Qt::Key_F: onFlee(); break;
+        case Qt::Key_V: onView(); break;
+        default: QWidget::keyPressEvent(event); break;
+    }
 }

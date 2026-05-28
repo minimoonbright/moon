@@ -81,9 +81,11 @@ void MapScene::placeEntities()
             bool hasImage = false;
             // 加载建筑图片
             QString imgPath;
-            if (ent.targetId == "barracks")   imgPath = "D:/MyProject/game/image/jun_ying.png";
-            else if (ent.targetId == "inn")        imgPath = "D:/MyProject/game/image/ke_zhan.png";
-            else if (ent.targetId == "blacksmith") imgPath = "D:/MyProject/game/image/tie_jiang_pu.png";
+            if (ent.targetId == "barracks")      imgPath = "image/jun_ying.png";
+            else if (ent.targetId == "inn")       imgPath = "image/ke_zhan.png";
+            else if (ent.targetId == "blacksmith") imgPath = "image/tie_jiang_pu.png";
+            else if (ent.targetId == "ren_shi_chu") imgPath = "image/ren_shi_chu.png";
+            else if (ent.targetId == "residence")  imgPath = "image/xiang_fang.png";
 
             if (!imgPath.isEmpty()) {
                 QPixmap img(imgPath);
@@ -107,8 +109,6 @@ void MapScene::placeEntities()
 
             // 建筑名字（没有图片的才显示文字）
             QString label;
-            if (ent.targetId == "residence") label = QString::fromUtf8("厢房");
-            else if (ent.targetId == "ren_shi_chu") label = QString::fromUtf8("人事处");
 
             if (!label.isEmpty()) {
                 QFont f("SimHei", 11, QFont::Bold);

@@ -29,6 +29,9 @@ public:
                      const QVector<Character *> &enemyTeam,
                      const QString &enemyLeaderId = "");
 
+protected:
+    void keyPressEvent(QKeyEvent *event) override;
+
 signals:
     void battleFinished(bool won, const QString &enemyLeaderId,
                         int exp, int gold, QStringList loot,
