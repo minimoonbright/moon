@@ -19,6 +19,7 @@ public:
     int lastMonsterX() const { return m_lastMx; }
     int lastMonsterY() const { return m_lastMy; }
     void removeMonsterAt(int x, int y);
+    void addMonster(MonsterSprite *monster);
 
 signals:
     void mapExit(const QString &targetMapId);

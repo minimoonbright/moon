@@ -176,6 +176,12 @@ bool MapScene::movePlayer(int dx, int dy)
     return true;
 }
 
+void MapScene::addMonster(MonsterSprite *monster)
+{
+    addItem(monster);
+    m_monsters.append(monster);
+}
+
 void MapScene::removeMonsterAt(int x, int y)
 {
     for (int i = 0; i < m_monsters.size(); ++i) {

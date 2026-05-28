@@ -2,6 +2,7 @@
 #include "map/MapScene.h"
 #include "map/MapView.h"
 #include "map/PlayerSprite.h"
+#include "map/MonsterSprite.h"
 #include "battle/BattleWidget.h"
 #include "character/Character.h"
 #include "core/DataManager.h"
@@ -9,6 +10,7 @@
 #include <QDebug>
 #include <QMessageBox>
 #include <QInputDialog>
+#include <QTimer>
 #include <QStringList>
 #include <QRandomGenerator>
 #include <algorithm>
@@ -17,6 +19,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
     m_stack = new QStackedWidget;
     setCentralWidget(m_stack);
+
+    m_respawnTimer = new QTimer(this);
+    m_respawnTimer->setSingleShot(true);
+    connect(m_respawnTimer, &QTimer::timeout, this, &MainWindow::onRespawnTimer);
+
     loadGameData();
     setupPlayerTeam();
     switchToMap("liu_bei_yard", 2, 2);
@@ -74,9 +81,29 @@ void MainWindow::switchToMap(const QString &mapId, int startX, int startY)
     m_mapView->setScene(m_mapScene);
     m_mapScene->loadMap(*mapData, startX, startY);
 
-    // 移除已被消灭的怪物
-    for (const auto &d : m_defeated.value(mapId))
-        m_mapScene->removeMonsterAt(d.x(), d.y());
+    // 处理被消灭的怪物：过期则随机重生，未过期则移除
+    QDateTime now = QDateTime::currentDateTime();
+    auto &defeated = m_defeated[mapId];
+    QVector<DefeatInfo> stillActive;
+    for (const auto &di : defeated) {
+        if (di.time.secsTo(now) > 10) {
+            // 10秒已过，随机位置重生
+            int rx, ry;
+            do {
+                rx = QRandomGenerator::global()->bounded(mapData->width);
+                ry = QRandomGenerator::global()->bounded(mapData->height);
+            } while (mapData->tiles[ry][rx] == 3); // 避开水域
+            auto *monster = new MonsterSprite("huang_jin_soldier");
+            monster->setGridPos(rx, ry);
+            monster->setPos(rx * 64 + 32, ry * 64 + 32);
+            m_mapScene->addMonster(monster);
+        } else {
+            // 仍在冷却中，从场景移除
+            m_mapScene->removeMonsterAt(di.x, di.y);
+            stillActive.append(di);
+        }
+    }
+    defeated = stillActive;
 
     connect(m_mapScene, &MapScene::mapExit, this, &MainWindow::onMapExit);
     connect(m_mapScene, &MapScene::battleTriggered, this, &MainWindow::onBattleTriggered);
@@ -128,8 +155,12 @@ void MainWindow::onBattleFinished(bool won, const QString &enemyId,
         for (auto *c : m_playerTeam) c->addExp(exp);
 
         if (m_monsterAtX >= 0) {
-            m_defeated[m_currentMapId].append(QPoint(m_monsterAtX, m_monsterAtY));
+            DefeatInfo di;
+            di.x = m_monsterAtX; di.y = m_monsterAtY;
+            di.time = QDateTime::currentDateTime();
+            m_defeated[m_currentMapId].append(di);
             m_monsterAtX = m_monsterAtY = -1;
+            m_respawnTimer->start(10000); // 10秒后重生
         }
 
         const auto *enemyTmpl = DataManager::instance().getGeneralTemplate(enemyId);
@@ -458,6 +489,34 @@ void MainWindow::processCaptive(int idx)
 }
 
 void MainWindow::onMapExit(const QString &targetMapId) { switchToMap(targetMapId); }
+
+void MainWindow::onRespawnTimer()
+{
+    if (!m_mapScene || m_currentMapId.isEmpty()) return;
+    const auto *mapData = DataManager::instance().getMap(m_currentMapId);
+    if (!mapData) return;
+
+    // 清理过期记录（10秒前被消灭的）
+    QDateTime now = QDateTime::currentDateTime();
+    auto &defeated = m_defeated[m_currentMapId];
+    defeated.erase(
+        std::remove_if(defeated.begin(), defeated.end(),
+            [now](const DefeatInfo &d) { return d.time.secsTo(now) >= 10; }),
+        defeated.end());
+
+    // 随机位置重生一个怪物
+    int rx, ry;
+    do {
+        rx = QRandomGenerator::global()->bounded(mapData->width);
+        ry = QRandomGenerator::global()->bounded(mapData->height);
+    } while (mapData->tiles[ry][rx] == 3);
+
+    auto *monster = new MonsterSprite("huang_jin_soldier");
+    monster->setGridPos(rx, ry);
+    monster->setPos(rx * 64 + 32, ry * 64 + 32);
+    m_mapScene->addMonster(monster);
+}
+
 void MainWindow::onBattleTriggered(const QString &monsterId)
 {
     if (m_mapScene && m_mapScene->player()) {

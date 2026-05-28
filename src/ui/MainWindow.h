@@ -1,6 +1,7 @@
 #pragma once
 #include <QMainWindow>
 #include <QStackedWidget>
+#include <QDateTime>
 #include "core/Types.h"
 
 class MapView;
@@ -14,6 +15,7 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
 
 private slots:
+    void onRespawnTimer();
     void onMapExit(const QString &targetMapId);
     void onBattleTriggered(const QString &monsterId);
     void onNpcInteracted(const QString &npcId);
@@ -44,5 +46,7 @@ private:
     QStringList m_captives;
     int m_savedPlayerX = -1, m_savedPlayerY = -1;
     int m_monsterAtX = -1, m_monsterAtY = -1;
-    QMap<QString, QVector<QPoint>> m_defeated; // mapId -> 怪物坐标列表
+    struct DefeatInfo { int x, y; QDateTime time; };
+    QMap<QString, QVector<DefeatInfo>> m_defeated;
+    QTimer *m_respawnTimer = nullptr;
 };
