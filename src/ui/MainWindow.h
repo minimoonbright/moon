@@ -42,4 +42,5 @@ private:
     int m_gold = 100;
     QMap<QString, int> m_items;
     QStringList m_captives;
+    int m_savedPlayerX = -1, m_savedPlayerY = -1;
 };

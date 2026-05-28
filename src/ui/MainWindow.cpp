@@ -1,6 +1,7 @@
 #include "MainWindow.h"
 #include "map/MapScene.h"
 #include "map/MapView.h"
+#include "map/PlayerSprite.h"
 #include "battle/BattleWidget.h"
 #include "character/Character.h"
 #include "core/DataManager.h"
@@ -51,7 +52,14 @@ void MainWindow::switchToMap(const QString &mapId, int startX, int startY)
 {
     const auto *mapData = DataManager::instance().getMap(mapId);
     if (!mapData) { qWarning() << "Map not found:" << mapId; return; }
+
+    // 同地图战后恢复位置
+    if (startX < 0 && mapId == m_currentMapId && m_savedPlayerX >= 0) {
+        startX = m_savedPlayerX;
+        startY = m_savedPlayerY;
+    }
     m_currentMapId = mapId;
+    m_savedPlayerX = m_savedPlayerY = -1;
 
     // 清理旧控件
     while (m_stack->count() > 0) {
@@ -440,5 +448,12 @@ void MainWindow::processCaptive(int idx)
 }
 
 void MainWindow::onMapExit(const QString &targetMapId) { switchToMap(targetMapId); }
-void MainWindow::onBattleTriggered(const QString &monsterId) { switchToBattle(monsterId); }
+void MainWindow::onBattleTriggered(const QString &monsterId)
+{
+    if (m_mapScene && m_mapScene->player()) {
+        m_savedPlayerX = m_mapScene->player()->gridX();
+        m_savedPlayerY = m_mapScene->player()->gridY();
+    }
+    switchToBattle(monsterId);
+}
 void MainWindow::onNpcInteracted(const QString &npcId) { qDebug() << "NPC:" << npcId; }
